@@ -3,6 +3,9 @@ import {useState, useRef} from 'react';
 import Papa from 'papaparse';
 import {zipsToArray, oneCityPerZip, cityAltArray} from '../../lib/parse';
 
+
+
+
 const UploadButton = () => {
   const originalButtonText = "Copy to Clipboard";
   const fileInput = useRef(null);
@@ -10,6 +13,8 @@ const UploadButton = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [buttonText, setButtonText] = useState(originalButtonText);
+
+
 
   const parseFile =   (file) => {
     let fileName = file.name;
@@ -23,12 +28,10 @@ const UploadButton = () => {
           data =  oneCityPerZip(parsedData);
         }
         if(fileName === "us-cities-all.csv"){
-          let altData = cityAltArray(data);
-          data = [...data, ...altData];
-          let parsedData = zipsToArray(data);
-          data =  oneCityPerZip(parsedData);
-            
-          
+          let zipData = zipsToArray(data);
+          let altData = cityAltArray(zipData);
+          console.log(altData)
+          data = [...data, ...altData]; 
           
         }
         setData(data)
